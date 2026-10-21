@@ -9,17 +9,15 @@ on:
 
 jobs:
   build:
-    name: Build ${{ matrix.platform }}
+    name: Build ${{ matrix.target }}
     runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
       matrix:
         include:
-          - platform: Android32
-            configure-args: -DANDROID_ABI=armeabi-v7a
-          - platform: Android64
-            configure-args: -DANDROID_ABI=arm64-v8a
+          - target: Android32
+          - target: Android64
 
     steps:
       - name: Checkout repository
@@ -31,12 +29,12 @@ jobs:
         uses: geode-sdk/build-geode-mod@main
         with:
           build-config: Release
-          configure-args: ${{ matrix.configure-args }}
+          target: ${{ matrix.target }}
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         if: success()
         with:
-          name: GDToolsReplayLab-${{ matrix.platform }}
-          path: build/**/*.geode
-          if-no-files-found: warn
+          name: GDToolsReplayLab-${{ matrix.target }}
+          path: output/*.geode
+          if-no-files-found: error
