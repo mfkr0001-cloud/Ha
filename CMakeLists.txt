@@ -1,4 +1,4 @@
-
+```cmake
 cmake_minimum_required(VERSION 3.21)
 
 project(GDToolsReplayLab VERSION 0.2.0)
@@ -19,4 +19,5 @@ endif()
 
 add_subdirectory($ENV{GEODE_SDK} ${CMAKE_CURRENT_BINARY_DIR}/geode)
 
-setup_geode_mod()
+setup_geode_mod(${PROJECT_NAME})
+```
